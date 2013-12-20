@@ -6,3 +6,4 @@ apps/built
 bin/
 .idea/
 out/
+.DS_Store
