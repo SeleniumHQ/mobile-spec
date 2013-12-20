@@ -1,2 +1,8 @@
 apps/src/UICatalog
 apps/built
+.classpath
+.project
+*.iml
+bin/
+.idea/
+out/
