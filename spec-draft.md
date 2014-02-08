@@ -96,10 +96,7 @@ Touch Gestures
 All platforms must adopt the Multi-Action API pioneered by Mozilla. In some
 cases it will not be possible to support the full range of gestures potentially
 described by this API on a given platform. In this case, the platform should
-degrade as gracefully as possible. In the case where the action cannot be
-faithfully performed at all (for example when requesting a multi-touch gesture
-on a platform which can only handle single-touch gestures), the server must
-respond with a 500.
+respond with a 500 when it cannot faithfully render the requested gesture.
 
 TODO: think harder about what we should do when it's not possible to complete
 a requested action and what the response should be.
