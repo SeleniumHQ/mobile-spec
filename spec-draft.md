@@ -69,9 +69,9 @@ The following locator strategies may be supported, depending on the automation
 platform:
 
 * `id`: a string corresponding to a resource ID
-* `android_uiautomator`: a string corresponding to a recursive element search using the UiAutomator library (Android only)
+* `-android_uiautomator`: a string corresponding to a recursive element search using the UiAutomator library (Android only)
     * TODO: specify this
-* `ios_uiautomation`: a string corresponding to a recursive element search using the UIAutomation library (iOS-only)
+* `-ios_uiautomation`: a string corresponding to a recursive element search using the UIAutomation library (iOS-only)
 * TODO: figure out whether server should report support of these strategies
 
 If automating a mobile browser in WebDriver mode, or a platform that uses HTML
@@ -107,6 +107,21 @@ a requested action and what the response should be.
 TODO: show what the gestures API actually looks like in terms of server
 endpoints that must be supported.
 
+Device Modes
+------------
+It is common to put a device into so-called 'Flight Safe Mode' in order to test
+an application's behavior when network connectivity is gone and restored. Two
+new endpoints will be added to support this:
+
+* GET /session/:sessionid/airplane-mode
+    * returns `true` or `false`
+    * `true`: device is in airplane mode
+    * `false`: device is not in airplane mode
+* POST /session/:sessionid/airplane-mode
+    * accepts `true` or `false`
+    * `true`: put device into airplane mode
+    * `false`: put device into normal mode
+
 Other Device Features
 ---------------------
 Mobile devices have a variety of sensors and input methods. These are automated
@@ -133,7 +148,16 @@ in a given AUT: the native layer and the webview layer. If providing webview
 support, the server must have the following endpoints:
 
 * GET /session/:sessionid/contexts
+    * returns an array of strings representing available contexts, e.g.
+      'WEBVIEW', or 'NATIVE'
+* GET /session/:sessionid/context
+    * returns one of:
+    * a string representing the current context
+    * `null`, representing the default context ("no context")
 * POST /session/:sessionid/context
+    * accepts one of:
+    * a string representing an available context
+    * `null`, signifying a return to the default context
 
 The first endpoint must return a possibly-empty array of strings. Each string
 must be the arbitrary name of an available context, e.g., one of possibly
@@ -143,8 +167,6 @@ error must be returned.  If the context is available, the server must switch
 automation to that context, such that all subsequent commands are taken to
 apply to that context. If the body of the POST is `null`, the server must
 return to the original context.
-
-TODO: look up POST /window to make sure this matches.
 
 If a server receives a request at an endpoint which is valid in some context
 but not the currently active context (for example if a user calls
