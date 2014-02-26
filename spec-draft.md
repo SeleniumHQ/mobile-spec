@@ -61,7 +61,7 @@ Locator Strategies
 The following locator strategies must be supported for non-HTML-based platforms:
 
 * `class_name`: a string representing the UI element type for a given platform, e.g., `UIAPickerWheel` for iOS or `android.widget.Button` for Android
-    * TODO: decide for iOS whether it should be `UIAPickerWheel` or `UIPickerWheel`
+    * These should exactly match the class names given by the underlying automation frameworks
 * `accessibility_id`: a string representing the accessibility id or label attached to a given element, e.g., for iOS the accessibility identifier and for Android the content-description
 * `xpath`: a valid xpath string applied to the XML document that would be retrieved using the page source command
 
@@ -97,9 +97,6 @@ All platforms must adopt the Multi-Action API pioneered by Mozilla. In some
 cases it will not be possible to support the full range of gestures potentially
 described by this API on a given platform. In this case, the platform should
 respond with a 500 when it cannot faithfully render the requested gesture.
-
-TODO: think harder about what we should do when it's not possible to complete
-a requested action and what the response should be.
 
 TODO: show what the gestures API actually looks like in terms of server
 endpoints that must be supported.
