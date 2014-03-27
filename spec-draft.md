@@ -60,18 +60,18 @@ Locator Strategies
 ------------------
 The following locator strategies must be supported for non-HTML-based platforms:
 
-* `class_name`: a string representing the UI element type for a given platform, e.g., `UIAPickerWheel` for iOS or `android.widget.Button` for Android
+* `class name`: a string representing the UI element type for a given platform, e.g., `UIAPickerWheel` for iOS or `android.widget.Button` for Android
     * These should exactly match the class names given by the underlying automation frameworks
-* `accessibility_id`: a string representing the accessibility id or label attached to a given element, e.g., for iOS the accessibility identifier and for Android the content-description
+* `accessibility id`: a string representing the accessibility id or label attached to a given element, e.g., for iOS the accessibility identifier and for Android the content-description
 * `xpath`: a valid xpath string applied to the XML document that would be retrieved using the page source command
 
 The following locator strategies may be supported, depending on the automation
 platform:
 
 * `id`: a string corresponding to a resource ID
-* `-android_uiautomator`: a string corresponding to a recursive element search using the UiAutomator library (Android only)
+* `-android uiautomator`: a string corresponding to a recursive element search using the UiAutomator library (Android only)
     * TODO: specify this
-* `-ios_uiautomation`: a string corresponding to a recursive element search using the UIAutomation library (iOS-only)
+* `-ios uiautomation`: a string corresponding to a recursive element search using the UIAutomation library (iOS-only)
 * TODO: figure out whether server should report support of these strategies
 
 If automating a mobile browser in WebDriver mode, or a platform that uses HTML
@@ -121,14 +121,13 @@ Other Device Features
 Mobile devices have a variety of sensors and input methods. These are automated
 as follows:
 
-* The virtual keyboard: ?
-* acceleromator: ?
+* The virtual keyboard: use sendKeys
+* acceleromator: TODO @mdas is working on this
 * geolocation: use regular webdriver endpoints
-* rotation (different from orientation): ?
-* battery level: ?
-* network speed: (maybe we don't want to allow access to this)?
+* rotation (different from orientation): TODO
+* battery level: not in spec, perhaps exposed via executeScript
+* network speed: not in spec, perhaps exposed via executeScript
 
-TODO: I feel like we never figured this out
 
 WebViews and Other Contexts
 ---------------------------
