@@ -107,11 +107,11 @@ It is common to put a device into so-called 'Flight Safe Mode' in order to test
 an application's behavior when network connectivity is gone and restored. Two
 new endpoints will be added to support this:
 
-* GET /session/:sessionid/airplane-mode
+* GET /session/:sessionid/airplane_mode
     * returns `true` or `false`
     * `true`: device is in airplane mode
     * `false`: device is not in airplane mode
-* POST /session/:sessionid/airplane-mode
+* POST /session/:sessionid/airplane_mode
     * accepts `true` or `false`
     * `true`: put device into airplane mode
     * `false`: put device into normal mode
