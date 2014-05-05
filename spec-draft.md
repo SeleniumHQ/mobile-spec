@@ -103,18 +103,39 @@ endpoints that must be supported.
 
 Device Modes
 ------------
-It is common to put a device into so-called 'Flight Safe Mode' in order to test
-an application's behavior when network connectivity is gone and restored. Two
-new endpoints will be added to support this:
+Devices have various states of network connectivity. In order to control
+those states we have the following endpoints:
 
-* GET /session/:sessionid/airplane_mode
-    * returns `true` or `false`
-    * `true`: device is in airplane mode
-    * `false`: device is not in airplane mode
-* POST /session/:sessionid/airplane_mode
-    * accepts `true` or `false`
-    * `true`: put device into airplane mode
-    * `false`: put device into normal mode
+* GET /session/:sessionid/network_connection
+    * returns ConnectionType
+* POST /session/:sessionid/network_connection
+    * accepts a ConnectionType
+    * returns ConnectionType
+
+Setting the network connection in the POST returns the ConnectionType because
+the device might not be capable of the network connection type requested.
+
+The remote end MUST reply with the capability "networkConnectionEnabled"
+
+ConnectionType -
+
+Is a bit mask that should be translated to an integer value when serialized.
+Value (Alias)      | Data | Wifi | Airplane Mode 
+-------------------------------------------------
+1 (Airplane Mode)  | 0    | 0    | 1
+6 (All network on) | 1    | 1    | 0
+4 (Data only)      | 1    | 0    | 0
+2 (Wifi only)      | 0    | 1    | 0
+0 (None)           | 0    | 0    | 0
+
+
+Example payload for setting "Airplane Mode":
+
+    { "name": "network_connection", "parameters": { "type": 1 } }
+
+Data is the upper bits since in the future we may want to support setting
+certain types of Data the device is capable of. For example 3G, 4G, LTE.
+
 
 Other Device Features
 ---------------------
