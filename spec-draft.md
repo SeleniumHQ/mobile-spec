@@ -177,9 +177,9 @@ The first endpoint must return a possibly-empty array of strings. Each string
 must be the arbitrary name of an available context, e.g., one of possibly
 multiple webviews.  The second must interpret the body of the request as the
 name of an available context. If that context is not found, a NoSuchContext
-error must be returned.  If the context is available, the server must switch
-automation to that context, such that all subsequent commands are taken to
-apply to that context. If the body of the POST is `null`, the server must
+error (code 35) must be returned.  If the context is available, the server must
+switch automation to that context, such that all subsequent commands are taken
+to apply to that context. If the body of the POST is `null`, the server must
 return to the original context.
 
 If a server receives a request at an endpoint which is valid in some context
