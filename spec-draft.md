@@ -167,11 +167,10 @@ support, the server must have the following endpoints:
 * GET /session/:sessionid/context
     * returns one of:
     * a string representing the current context
-    * `null`, representing the default context ("no context")
+    * `null`, representing "no context"
 * POST /session/:sessionid/context
     * accepts one of:
     * a string representing an available context
-    * `null`, signifying a return to the default context
 
 The first endpoint must return a possibly-empty array of strings. Each string
 must be the arbitrary name of an available context, e.g., one of possibly
