@@ -17,12 +17,12 @@ The initial details of this specification were worked out at a series of
 meetings held in Mozilla's offices in London in August of 2013. The
 participants were:
 
-* David Burns (Mozilla) - [website]() - [twitter]()
-* Dominik Dary (eBay) - [website]() - [twitter]()
+* David Burns (Mozilla) - [website]() - [twitter](https://twitter.com/automatedtester)
+* Dominik Dary (eBay) - [website]() - [twitter](https://twitter.com/dominikdary)
 * Jonathan Lipps (Sauce Labs) - [website](http://jonathanlipps.com) - [twitter](http://twitter.com/jlipps)
 * Jason ? (Facebook) - [website]() - [twitter]()
 * François Reynaud (eBay) - [website]() - [twitter]()
-* Simon Stewart (Facebook) - [website]() - [twitter]()
+* Simon Stewart (Facebook) - [website]() - [twitter](https://twitter.com/shs96c)
 * Santiago Suarez Ordoñez (Sauce Labs) - [website]() - [twitter]()
 
 Sessions
