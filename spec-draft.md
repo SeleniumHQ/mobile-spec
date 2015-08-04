@@ -27,7 +27,7 @@ participants were:
 
 Sessions
 --------
-Sessions work just like WebDriver: you POST to /session and receive a sessionId
+Sessions work just like WebDriver: you POST to /session and receive a sessionid
 as a response if the server can give you one, at which point you can send
 further automation commands. If the server can't start a session, for example
 if another session is running and only one session can be handled at a time,
@@ -117,10 +117,10 @@ the device might not be capable of the network connection type requested.
 
 The remote end MUST reply with the capability "networkConnectionEnabled"
 
-ConnectionType -
+### ConnectionType
 
 Is a bit mask that should be translated to an integer value when serialized.
-Value (Alias)      | Data | Wifi | Airplane Mode 
+Value (Alias)      | Data | Wifi | Airplane Mode
 -------------------------------------------------
 1 (Airplane Mode)  | 0    | 0    | 1
 6 (All network on) | 1    | 1    | 0
@@ -136,6 +136,106 @@ Example payload for setting "Airplane Mode":
 Data is the upper bits since in the future we may want to support setting
 certain types of Data the device is capable of. For example 3G, 4G, LTE.
 
+Device Orientation
+------------------
+
+The [JSON Wire Protocol](https://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/orientation)
+already supports a very basic concept of
+orientation, involving two orientation options: portrait and landscape.
+Ultimately this will be subsumed under Device Rotation (see below), but for now
+we continue to support these endopints for mobile devices.
+
+* GET /session/:sessionid/orientation
+    * returns ScreenOrientation
+* POST /session/:sessionid/orientation
+    * accepts a ScreenOrientation
+
+### ScreenOrientation
+
+A `ScreenOrientation` can be one of two strings:
+
+* `LANDSCAPE`
+* `PORTRAIT`
+
+Device Rotation
+---------------
+
+Mobile devices can theoretically be used in any spatial orientation. Thus the
+concept of 'orientation' is actually much more general. We will call it
+'rotation'. Currently, mobile OS automation technologies do not expose hooks
+for arbitrary rotation, but allow simply for a small set of 'orientations',
+like landscape or portrait (largely because these are the main categories used
+by apps themselves). We described some simple 'orientation' options above. Here
+we describe the spec for rotation, which can be used when automation tool
+vendors release support for more than 'landscape' and 'portrait' orientations.
+Apple, for example, already has more options (such as "portrait + faceup").
+
+We can define any rotation with a combination of 3 angles: rotations around the
+X, Y, and Z axes in 3d space. The X axis is horizontal (width), Y is vertical
+(height), and Z is extensive (depth). We arbitrarily stipulate the "default"
+position for a device (i.e., its position when the X, Y and Z angles are 0, 0,
+and 0) is as follows:
+
+* The device screen is facing us, parallel to the value 0 on the Z axis (i.e.,
+  it extends into the positive Z space, not the negative (see below))
+* The bottom edge of the device lies on the X axis The left edge of the device
+  lies on the Y axis
+
+In terms of polarity, we stipulate that the X axis goes from negative to
+positive, left to right. The Y axis goes from negative to positive, bottom to
+top. And the Z axis goes from negative to positive, front to back.
+
+Now, assuming the bottom, left, front edge of the device always remains at the
+origin point (i.e., the point x=0, y=0, z=0), we can define any rotation. The
+"default" rotation described above would be equivalent to a normal "portrait"
+orientation, the device being held straight out in front of the user. The
+rotation `(x=90deg, y=0deg, z=0deg)` signifies a similar portrait orientation,
+but "face up" on a table, for example. "Face down portrait" would then be
+`(x=90deg, y=0deg, z=180deg)`.
+
+We can now define the necessary endpoints:
+
+* GET /session/:sessionid/rotation
+    * returns DeviceRotation
+* POST /session/:sessionid/rotation
+    * accepts a DeviceRotation
+
+The remote end MUST reply with the capability "deviceRotationEnabled" in order
+to use these methods.
+
+### DeviceRotation
+
+`DeviceRotation` is an object with 3 keys, `x`, `y`, and `z`. Each of these
+represents an angle in degrees (on the real number scale `0 <= deg < 360`).
+This is how rotation works for each axis:
+
+* X axis: angles increasing towards the positive Z space (i.e., 'away')
+* Y axis: angles increasing towards the positive Z space (i.e., 'left')
+* Z axis: angles increasing towards the negative Y space (i.e., 'down')
+
+Example payloads for setting various common rotations:
+
+* Standard portrait
+    * `{"name": "rotation", "parameters": {"x": 0, "y": 0, "z": 0}}`
+* Portrait face-up
+    * `{"name": "rotation", "parameters": {"x": 90, "y": 0, "z": 0}}`
+* Portrait face-down
+    * `{"name": "rotation", "parameters": {"x": 90, "y": 0, "z": 180}}`
+    * `{"name": "rotation", "parameters": {"x": 270, "y": 0, "z": 0}}`
+* Portrait, slight away-tilt
+    * `{"name": "rotation", "parameters": {"x": 15, "y": 0, "z": 0}}`
+* Landscape right
+    * `{"name": "rotation", "parameters": {"x": 0, "y": 0, "z": 90}}`
+* Landscape left
+    * `{"name": "rotation", "parameters": {"x": 0, "y": 0, "z": 270}}`
+
+### Errors
+
+If the `DeviceRotation` object sent in by the client does not conform to the
+specification (e.g., if values are non-numeric or out of the allowed range), or
+if the server cannot perform the requested specific rotation (say because it is
+limited to a certain subset of rotations that does not include the requested
+orientation), it MUST respond with an `UnableToRotateDevice` error (code XXX).
 
 Other Device Features
 ---------------------
@@ -145,7 +245,6 @@ as follows:
 * The virtual keyboard: use sendKeys
 * acceleromator: TODO @mdas is working on this
 * geolocation: use regular webdriver endpoints
-* rotation (different from orientation): TODO
 * battery level: not in spec, perhaps exposed via executeScript
 * network speed: not in spec, perhaps exposed via executeScript
 
