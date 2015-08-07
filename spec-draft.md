@@ -139,7 +139,7 @@ certain types of Data the device is capable of. For example 3G, 4G, LTE.
 Device Orientation
 ------------------
 
-The [JSON Wire Protocol](https://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/orientation)
+The [JSON Wire Protocol](https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#sessionsessionidorientation)
 already supports a very basic concept of
 orientation, involving two orientation options: portrait and landscape.
 Ultimately this will be subsumed under Device Rotation (see below), but for now
@@ -161,37 +161,63 @@ Device Rotation
 ---------------
 
 Mobile devices can theoretically be used in any spatial orientation. Thus the
-concept of 'orientation' is actually much more general. We will call it
-'rotation'. Currently, mobile OS automation technologies do not expose hooks
-for arbitrary rotation, but allow simply for a small set of 'orientations',
-like landscape or portrait (largely because these are the main categories used
-by apps themselves). We described some simple 'orientation' options above. Here
-we describe the spec for rotation, which can be used when automation tool
-vendors release support for more than 'landscape' and 'portrait' orientations.
-Apple, for example, already has more options (such as "portrait + faceup").
+concept of 'orientation' is actually much more general. We will call this
+concept of arbitrary spatial orientation 'rotation'. Currently, mobile OS
+automation technologies do not expose hooks for arbitrary rotation, but allow
+simply for a small set of 'orientations', like landscape or portrait (largely
+because these are the main categories used by apps themselves). We described
+some simple 'orientation' options above. Here we describe the spec for
+rotation, which can be used when automation tool vendors release support for
+more than 'landscape' and 'portrait' orientations.  Apple, for example, already
+has more options (such as "portrait + faceup").
 
 We can define any rotation with a combination of 3 angles: rotations around the
 X, Y, and Z axes in 3d space. The X axis is horizontal (width), Y is vertical
-(height), and Z is extensive (depth). We arbitrarily stipulate the "default"
-position for a device (i.e., its position when the X, Y and Z angles are 0, 0,
-and 0) is as follows:
+(height), and Z is extensive (depth).
+
+In the following image, the X axis is red, Y is blue, and Z is green:
+
+![Rotation axes](img/rotation-01-axes.png)
+
+We arbitrarily stipulate that the "neutral" position for a device (i.e., its
+position when the X, Y and Z angles are 0, 0, and 0) is as follows:
 
 * The device screen is facing us, parallel to the value 0 on the Z axis (i.e.,
   it extends into the positive Z space, not the negative (see below))
 * The bottom edge of the device lies on the X axis The left edge of the device
   lies on the Y axis
 
+In the following image, the device is in this "neutral" position:
+
+![Neutral position](img/rotation-02-default.png)
+
+A device does not necessarily start out in any given automation session in
+"neutral" rotation; we simply define this concept in order to have a visual
+idea of what it means for a device to be at 0 degrees for all three axes. The
+automation server, when requested, should always return the actual rotation.
+
 In terms of polarity, we stipulate that the X axis goes from negative to
 positive, left to right. The Y axis goes from negative to positive, bottom to
-top. And the Z axis goes from negative to positive, front to back.
+top. And the Z axis goes from negative to positive, front to back. In the image
+above, for example, the dotted axis segments are on the negative scale, and the
+solid axis segments are on the positive scale.
 
 Now, assuming the bottom, left, front edge of the device always remains at the
 origin point (i.e., the point x=0, y=0, z=0), we can define any rotation. The
-"default" rotation described above would be equivalent to a normal "portrait"
+"neutral" rotation described above would be equivalent to a normal "portrait"
 orientation, the device being held straight out in front of the user. The
 rotation `(x=90deg, y=0deg, z=0deg)` signifies a similar portrait orientation,
-but "face up" on a table, for example. "Face down portrait" would then be
-`(x=90deg, y=0deg, z=180deg)`.
+but "face up" on a table, for example, as in the following image:
+
+![Rotation x=90](img/rotation-03-x90.png)
+
+And `(x=0deg, y=90deg, z=0deg)` would be:
+
+![Rotation y=90](img/rotation-04-y90.png)
+
+Finally, `(x=0deg, y=0deg, z=90deg)` would be:
+
+![Rotation z=90](img/rotation-05-z90.png)
 
 We can now define the necessary endpoints:
 
@@ -200,7 +226,7 @@ We can now define the necessary endpoints:
 * POST /session/:sessionid/rotation
     * accepts a DeviceRotation
 
-The remote end MUST reply with the capability "deviceRotationEnabled" in order
+The remote end MUST reply with the capability "deviceRotation" in order
 to use these methods.
 
 ### DeviceRotation
@@ -209,9 +235,9 @@ to use these methods.
 represents an angle in degrees (on the real number scale `0 <= deg < 360`).
 This is how rotation works for each axis:
 
-* X axis: angles increasing towards the positive Z space (i.e., 'away')
-* Y axis: angles increasing towards the positive Z space (i.e., 'left')
-* Z axis: angles increasing towards the negative Y space (i.e., 'down')
+* X axis: angles increasing towards the positive Z space
+* Y axis: angles increasing towards the positive Z space
+* Z axis: angles increasing towards the negative Y space
 
 Example payloads for setting various common rotations:
 
@@ -220,8 +246,8 @@ Example payloads for setting various common rotations:
 * Portrait face-up
     * `{"name": "rotation", "parameters": {"x": 90, "y": 0, "z": 0}}`
 * Portrait face-down
-    * `{"name": "rotation", "parameters": {"x": 90, "y": 0, "z": 180}}`
-    * `{"name": "rotation", "parameters": {"x": 270, "y": 0, "z": 0}}`
+    * Bottom of device towards user: `{"name": "rotation", "parameters": {"x": 90, "y": 0, "z": 180}}`
+    * Top of device towards user: `{"name": "rotation", "parameters": {"x": 270, "y": 0, "z": 0}}`
 * Portrait, slight away-tilt
     * `{"name": "rotation", "parameters": {"x": 15, "y": 0, "z": 0}}`
 * Landscape right
@@ -235,7 +261,7 @@ If the `DeviceRotation` object sent in by the client does not conform to the
 specification (e.g., if values are non-numeric or out of the allowed range), or
 if the server cannot perform the requested specific rotation (say because it is
 limited to a certain subset of rotations that does not include the requested
-orientation), it MUST respond with an `UnableToRotateDevice` error (code XXX).
+orientation), it MUST respond with an `Unable to Rotate Device` error.
 
 Other Device Features
 ---------------------
