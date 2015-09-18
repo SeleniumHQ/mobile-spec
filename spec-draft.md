@@ -309,7 +309,7 @@ return to the original context.
 If a server receives a request at an endpoint which is valid in some context
 but not the currently active context (for example if a user calls
 `driver.get()` in a native context instead of a webview context), the server
-must respond with an InvalidContentException.
+must respond with an InvalidContextException (code 36).
 
 Waiting for Conditions
 ----------------------
