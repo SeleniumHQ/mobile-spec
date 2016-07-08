@@ -152,10 +152,14 @@ we continue to support these endopints for mobile devices.
 
 ### ScreenOrientation
 
-A `ScreenOrientation` can be one of two strings:
-
-* `LANDSCAPE`
-* `PORTRAIT`
+A `ScreenOrientation` can be one of the following strings:
+   
+* `Portrait`
+* `PortraitUpsideDown`
+* `LandscapeLeft`
+* `LandscapeRight`
+* `FaceUp`
+* `FaceDown`
 
 Device Rotation
 ---------------
