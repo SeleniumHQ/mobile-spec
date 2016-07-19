@@ -242,18 +242,18 @@ This is how rotation works for each axis:
 Example payloads for setting various common rotations:
 
 * Standard portrait
-    * `{"name": "rotation", "parameters": {"x": 0, "y": 0, "z": 0}}`
+    * `{"x": 0, "y": 0, "z": 0}`
 * Portrait face-up
-    * `{"name": "rotation", "parameters": {"x": 90, "y": 0, "z": 0}}`
+    * `{"x": 90, "y": 0, "z": 0}`
 * Portrait face-down
-    * Bottom of device towards user: `{"name": "rotation", "parameters": {"x": 90, "y": 0, "z": 180}}`
-    * Top of device towards user: `{"name": "rotation", "parameters": {"x": 270, "y": 0, "z": 0}}`
+    * Bottom of device towards user: `{"x": 90, "y": 0, "z": 180}`
+    * Top of device towards user: `{"x": 270, "y": 0, "z": 0}`
 * Portrait, slight away-tilt
-    * `{"name": "rotation", "parameters": {"x": 15, "y": 0, "z": 0}}`
+    * `{"x": 15, "y": 0, "z": 0}`
 * Landscape right
-    * `{"name": "rotation", "parameters": {"x": 0, "y": 0, "z": 90}}`
+    * `{"x": 0, "y": 0, "z": 90}`
 * Landscape left
-    * `{"name": "rotation", "parameters": {"x": 0, "y": 0, "z": 270}}`
+    * `{"x": 0, "y": 0, "z": 270}`
 
 ### Errors
 
