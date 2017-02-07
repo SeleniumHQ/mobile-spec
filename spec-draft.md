@@ -120,13 +120,14 @@ The remote end MUST reply with the capability "networkConnectionEnabled"
 ### ConnectionType
 
 Is a bit mask that should be translated to an integer value when serialized.
-Value (Alias)      | Data | Wifi | Airplane Mode
--------------------------------------------------
-1 (Airplane Mode)  | 0    | 0    | 1
-6 (All network on) | 1    | 1    | 0
-4 (Data only)      | 1    | 0    | 0
-2 (Wifi only)      | 0    | 1    | 0
-0 (None)           | 0    | 0    | 0
+
+|Value (Alias)      | Data | Wifi | Airplane Mode|
+|-------------------|------|------|--------------|
+|1 (Airplane Mode)  | 0    | 0    | 1            |
+|6 (All network on) | 1    | 1    | 0|
+|4 (Data only)      | 1    | 0    | 0|
+|2 (Wifi only)      | 0    | 1    | 0|
+|0 (None)           | 0    | 0    | 0|
 
 
 Example payload for setting "Airplane Mode":
