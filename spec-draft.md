@@ -273,7 +273,10 @@ as follows:
 * acceleromator: TODO @mdas is working on this
 * geolocation: use regular webdriver endpoints
 * battery level: not in spec, perhaps exposed via executeScript
+* battery status: not in spec, perhaps exposed via executeScript
 * network speed: not in spec, perhaps exposed via executeScript
+* send sms: not in spec, perhaps exposed via executeScript
+* phone calls: not in spec, perhaps exposed via executeScript
 
 
 WebViews and Other Contexts
