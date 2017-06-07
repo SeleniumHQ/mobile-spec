@@ -272,11 +272,21 @@ as follows:
 * The virtual keyboard: use sendKeys
 * acceleromator: TODO @mdas is working on this
 * geolocation: use regular webdriver endpoints
-* battery level: not in spec, perhaps exposed via executeScript
-* battery status: not in spec, perhaps exposed via executeScript
 * network speed: not in spec, perhaps exposed via executeScript
-* send sms: not in spec, perhaps exposed via executeScript
-* phone calls: not in spec, perhaps exposed via executeScript
+
+
+Battery
+-------
+Device battery changes it's a factor that might trigger events on users applications, controlling this will help to monitor and verify how apps responds to these factors.
+
+The battery status should have two states: charging or not-charging. In some cases, apps might respond different on low battery level so the idea is to provide a method to set specific battery level for the devices.
+
+
+External communication factors
+------------------------------
+# TODO - write proposal
+* receive sms:
+* receive phone calls:
 
 
 WebViews and Other Contexts
