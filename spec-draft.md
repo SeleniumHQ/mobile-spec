@@ -277,16 +277,14 @@ as follows:
 
 Battery
 -------
-Device battery changes it's a factor that might trigger events on users applications, controlling this will help to monitor and verify how apps responds to these factors.
+Device battery changes might trigger events on users applications, controlling this will help monitor and verify how apps responds to these factors.
 
 The battery status should have two states: charging or not-charging. In some cases, apps might respond different on low battery level so the idea is to provide a method to set specific battery level for the devices.
 
 
 External communication factors
 ------------------------------
-# TODO - write proposal
-* receive sms:
-* receive phone calls:
+Receiving messages or phone calls it's usual on mobile devices, having the possibility to mock this events would improve the application reaction on this external factors.
 
 
 WebViews and Other Contexts
