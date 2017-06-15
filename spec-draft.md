@@ -279,7 +279,24 @@ Battery
 -------
 Device battery changes might trigger events on users applications, controlling this will help monitor and verify how apps responds to these factors.
 
-The battery status should have two states: charging or not-charging. In some cases, apps might respond different on low battery level so the idea is to provide a method to set specific battery level for the devices.
+The battery state should have two options: ON, OFF depending if the power ac state it's charging or not.
+
+* GET /session/:sessionId/appium/device/battery_state
+  * returns BatteryState
+
+
+* POST /session/:sessionId/appium/device/battery_state
+  * accepts BatteryState
+
+
+A `BatteryState` can be one of two strings:
+ * ON
+ * OFF
+
+In some cases, apps might respond different on low battery level so the idea is to provide a method to set specific battery level for the devices.
+
+* POST /session/:sessionId/appium/device/battery_level
+  * accepts [0..100]
 
 
 External communication factors
