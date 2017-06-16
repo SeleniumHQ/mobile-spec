@@ -295,6 +295,9 @@ A `BatteryState` can be one of two strings:
 
 In some cases, apps might respond different on low battery level so the idea is to provide a method to set specific battery level for the devices.
 
+* GET /session/:sessionId/appium/device/battery_level
+  * returns [0..100]
+
 * POST /session/:sessionId/appium/device/battery_level
   * accepts [0..100]
 
