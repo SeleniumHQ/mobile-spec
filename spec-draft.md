@@ -306,8 +306,7 @@ External communication factors
 ------------------------------
 Receiving messages or phone calls it's usual on mobile devices, having the possibility to mock this events would improve the application reaction on this external factors.
 
-Phone calls(GSM)
-----------------
+### Phone calls(GSM)
 The idea is to be able to mock phone calls entering the device and handle the actions that triggers; you may want to accept it, cancel or put it on hold.
 
 * POST /session/:sessionId/appium/device/gsm_call
@@ -324,13 +323,11 @@ The idea is to be able to mock phone calls entering the device and handle the ac
 The `CALL` action should trigger the mocked call to the device from the `PhoneNumber` provided, then another action should take place in order to complete the flow as in real life.
 
 
-SMS
----
+### SMS
 During this days a lot of apps depend on receiving sms, even if they are not messaging platform, apps may want to check sms to validate accounts, send promotion codes, etc. We should add
 
 * POST /session/:sessionId/appium/device/sms_send
   * accepts PhoneNumber, Message
-
 
 
 
