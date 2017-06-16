@@ -281,11 +281,11 @@ Device battery changes might trigger events on users applications, controlling t
 
 The battery state should have two options: ON, OFF depending if the power ac state it's charging or not.
 
-* GET /session/:sessionId/appium/device/battery_state
+* GET /session/:sessionId/device/battery_state
   * returns BatteryState
 
 
-* POST /session/:sessionId/appium/device/battery_state
+* POST /session/:sessionId/device/battery_state
   * accepts BatteryState
 
 
@@ -295,10 +295,10 @@ A `BatteryState` can be one of two strings:
 
 In some cases, apps might respond different on low battery level so the idea is to provide a method to set specific battery level for the devices.
 
-* GET /session/:sessionId/appium/device/battery_level
+* GET /session/:sessionId/device/battery_level
   * returns [0..100]
 
-* POST /session/:sessionId/appium/device/battery_level
+* POST /session/:sessionId/device/battery_level
   * accepts [0..100]
 
 
@@ -309,7 +309,7 @@ Receiving messages or phone calls it's usual on mobile devices, having the possi
 ### Phone calls(GSM)
 The idea is to be able to mock phone calls entering the device and handle the actions that triggers; you may want to accept it, cancel or put it on hold.
 
-* POST /session/:sessionId/appium/device/gsm_call
+* POST /session/:sessionId/device/gsm_call
   * accepts PhoneNumber, GsmAction
 
 
@@ -326,7 +326,7 @@ The `CALL` action should trigger the mocked call to the device from the `PhoneNu
 ### SMS
 During this days a lot of apps depend on receiving sms, even if they are not messaging platform, apps may want to check sms to validate accounts, send promotion codes, etc. We should add
 
-* POST /session/:sessionId/appium/device/sms_send
+* POST /session/:sessionId/device/sms_send
   * accepts PhoneNumber, Message
 
 
