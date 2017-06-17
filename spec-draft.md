@@ -327,7 +327,7 @@ The `CALL` action should trigger the mocked call to the device from the `PhoneNu
 ### SMS
 During this days a lot of apps depend on receiving sms, even if they are not messaging platform, apps may want to check sms to validate accounts, send promotion codes, etc. We should add
 
-* POST /session/:sessionId/device/sms_send
+* POST /session/:sessionId/device/sms
   * accepts { phoneNumber: PhoneNumber, message: Message }
 
 
