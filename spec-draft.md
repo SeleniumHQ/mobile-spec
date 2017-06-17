@@ -310,10 +310,11 @@ Receiving messages or phone calls it's usual on mobile devices, having the possi
 The idea is to be able to mock phone calls entering the device and handle the actions that triggers; you may want to accept it, cancel or put it on hold.
 
 * POST /session/:sessionId/device/gsm_call
-  * accepts PhoneNumber, GsmAction
+  * accepts { phoneNumber: PhoneNumber, action: GsmAction }
 
 
-`GsmAction`'s would be:
+Where `PhoneNumber` should be a valid phone number and
+`GsmAction`'s would be String constants:
 
 * CALL
 * ACCEPT
@@ -327,7 +328,7 @@ The `CALL` action should trigger the mocked call to the device from the `PhoneNu
 During this days a lot of apps depend on receiving sms, even if they are not messaging platform, apps may want to check sms to validate accounts, send promotion codes, etc. We should add
 
 * POST /session/:sessionId/device/sms_send
-  * accepts PhoneNumber, Message
+  * accepts { phoneNumber: PhoneNumber, message: Message }
 
 
 
