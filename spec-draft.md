@@ -293,13 +293,13 @@ A `BatteryState` can be one of two strings:
  * ON
  * OFF
 
-In some cases, apps might respond different on low battery level so the idea is to provide a method to set specific battery level for the devices.
+In some cases, apps might respond different on low battery level so the idea is to provide a method to set specific battery percent level for the devices.
 
 * GET /session/:sessionId/device/battery_level
-  * returns [0..100]
+  * returns Integer between [0..100]
 
 * POST /session/:sessionId/device/battery_level
-  * accepts [0..100]
+  * accepts Integer between [0..100]
 
 
 External communication factors
