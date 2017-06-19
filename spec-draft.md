@@ -323,6 +323,17 @@ Where `PhoneNumber` should be a valid phone number and
 
 The `CALL` action should trigger the mocked call to the device from the `PhoneNumber` provided, then another action should take place in order to complete the flow as in real life.
 
+At a certain moment *GSM* service can be altered due to travels, network going down and other factors, so we could add:
+
+* POST /session/:sessionId/device/gsm_state
+  * accepts GsmState
+
+to alter this states using Strings constant to set the `GsmState`:
+* HOME
+* UNREGISTERED
+* SEARCHING
+* ROAMING
+
 
 ### SMS
 During this days a lot of apps depend on receiving sms, even if they are not a messaging platform, apps may want to check sms to validate accounts, receive promotion codes, etc. We could add
@@ -330,7 +341,7 @@ During this days a lot of apps depend on receiving sms, even if they are not a m
 * POST /session/:sessionId/device/sms
   * accepts { phoneNumber: PhoneNumber, message: Message }
 
-been `Message` a valid String text. 
+been `Message` a valid String text.
 
 
 WebViews and Other Contexts
