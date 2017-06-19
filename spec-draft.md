@@ -272,8 +272,76 @@ as follows:
 * The virtual keyboard: use sendKeys
 * acceleromator: TODO @mdas is working on this
 * geolocation: use regular webdriver endpoints
-* battery level: not in spec, perhaps exposed via executeScript
 * network speed: not in spec, perhaps exposed via executeScript
+
+
+Battery
+-------
+Device battery changes might trigger events on users applications, controlling this will help monitor and verify how apps responds to these factors.
+
+The battery state should have two options: ON, OFF depending if the power ac state it's charging or not.
+
+* GET /session/:sessionId/device/battery_state
+  * returns BatteryState
+
+
+* POST /session/:sessionId/device/battery_state
+  * accepts BatteryState
+
+
+A `BatteryState` can be one of two strings:
+ * ON
+ * OFF
+
+In some cases, apps might respond different on low battery level so the idea is to provide a method to set specific battery percent level for the devices.
+
+* GET /session/:sessionId/device/battery_level
+  * returns Integer between [0..100]
+
+* POST /session/:sessionId/device/battery_level
+  * accepts Integer between [0..100]
+
+
+External communication factors
+------------------------------
+Receiving messages or phone calls it's usual on mobile devices, having the possibility to mock this events would improve the application reaction on this external factors.
+
+### Phone calls(GSM)
+The idea is to be able to mock phone calls entering the device and handle the actions that triggers; you may want to accept it, cancel or put it on hold.
+
+* POST /session/:sessionId/device/gsm_call
+  * accepts { phoneNumber: PhoneNumber, action: GsmAction }
+
+
+Where `PhoneNumber` should be a valid phone number and
+`GsmAction`'s would be String constants:
+
+* CALL
+* ACCEPT
+* CANCEL
+* HOLD
+
+The `CALL` action should trigger the mocked call to the device from the `PhoneNumber` provided, then another action should take place in order to complete the flow as in real life.
+
+At a certain moment *GSM* service can be altered due to travels, network going down and other factors, so we could add:
+
+* POST /session/:sessionId/device/gsm_state
+  * accepts GsmState
+
+to change it using Strings constant to set the `GsmState`:
+* HOME
+* UNREGISTERED
+* SEARCHING
+* ROAMING
+
+
+### SMS
+During this days a lot of apps depend on receiving sms, even if they are not a messaging platform, apps may want to check sms to validate accounts, receive promotion codes, etc. We could add
+
+* POST /session/:sessionId/device/sms
+  * accepts { phoneNumber: PhoneNumber, message: Message }
+
+been `Message` a valid String text.
 
 
 WebViews and Other Contexts
