@@ -328,7 +328,7 @@ At a certain moment *GSM* service can be altered due to travels, network going d
 * POST /session/:sessionId/device/gsm_state
   * accepts GsmState
 
-to alter this states using Strings constant to set the `GsmState`:
+to change it using Strings constant to set the `GsmState`:
 * HOME
 * UNREGISTERED
 * SEARCHING
