@@ -283,20 +283,25 @@ webbrowser inside of a 'native' application. These are called 'webviews', and,
 if possible, a server for a given platform should implement support for
 automating the webview using the full, regular, WebDriver API.
 
-This creates a situation where there are two potential contexts for automation
-in a given AUT: the native layer and the webview layer. If providing webview
-support, the server must have the following endpoints:
+This creates a situation where there are two or more potential contexts for
+automation in a given AUT: the native layer and one or more webview layers. A
+webview can be distinguished by a unique `id` (`NATIVE_APP` for the native layer)
+and the `url` of the content of the webview.
+
+If providing webview support, the server must have the following endpoints:
 
 * GET /session/:sessionid/contexts
-    * returns an array of strings representing available contexts, e.g.
-      'WEBVIEW', or 'NATIVE'
+    * returns an array of objects representing available contexts, with at least
+      the properties `id` and `url` in the case of any webviews. E.g.,
+      `{ id: 'NATIVE_APP' }` and
+      `{ id: 'WEBVIEW_1', url: 'http://www.seleniumhq.org/'}`
 * GET /session/:sessionid/context
     * returns one of:
     * a string representing the current context
     * `null`, representing "no context"
 * POST /session/:sessionid/context
     * accepts one of:
-    * a string representing an available context
+    * the string `id` representing an available context
 
 The first endpoint must return a possibly-empty array of strings. Each string
 must be the arbitrary name of an available context, e.g., one of possibly
